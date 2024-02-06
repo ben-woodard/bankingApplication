@@ -29,15 +29,18 @@
 
     <div>
         <h1>Accounts</h1>
-        <div th:each="account : ${user.accounts}">
-            <a method="get"
-               th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
-                <span th:text="${account.accountName}"></span>
-            </a>
-        </div>
-        <a method="post" th:href="@{/users/{userId}/accounts">
-            <button>Create New Bank Account</button>
-        </a>
+        <form method="post" th:action="@{/users/{userId}/account (userId=${user.userId})}">
+            <div th:each="account : ${user.accounts}">
+                <a method="get"
+                   th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
+                    <span th:text="${account.accountName}"></span>
+                </a>
+            </div>
+            <div>
+                <input type="submit" value="Create New Account"/>
+            </div>
+
+        </form>
         <br>
         <a method="get" th:href="@{/users}">Back</a>
     </div>
@@ -51,7 +54,8 @@
     <span th:text="${user.name}"></span><br/>
     <span th:text="${user.password}"></span>
     <div th:each="account : ${user.accounts}">
-        <a method="get" th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
+        <a method="get"
+           th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
             <span th:text="${account.accountName}"></span>
         </a>
     </div>
