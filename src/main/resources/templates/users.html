@@ -27,23 +27,20 @@
     </form>
     <hr>
 
-    <div>
-        <h1>Accounts</h1>
-        <form method="post" th:action="@{/users/{userId}/account (userId=${user.userId})}">
-            <div th:each="account : ${user.accounts}">
-                <a method="get"
-                   th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
-                    <span th:text="${account.accountName}"></span>
-                </a>
-            </div>
-            <div>
-                <input type="submit" value="Create New Account"/>
-            </div>
-
-        </form>
-        <br>
-        <a method="get" th:href="@{/users}">Back</a>
-    </div>
+    <h1>Accounts</h1>
+    <form method="post" th:action="@{/users/{userId}/account (userId=${user.userId})}">
+        <div th:each="account : ${user.accounts}">
+            <a method="get"
+               th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
+                <span th:text="${account.accountName}"></span>
+            </a>
+        </div>
+        <div>
+            <input type="submit" value="Create New Account"/>
+        </div>
+    </form>
+    <br>
+    <a method="get" th:href="@{/users}">Back</a>
 </div>
 
 

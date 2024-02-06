@@ -32,11 +32,12 @@ public class AccountService {
         return accountRepo.save(account);
     }
 
-    public Account createAccount(User user) {
+    public Account createAccount(Long userId) {
+        User user = userService.findById(userId);
         Account account = new Account();
         account.setAccountName("Account #" + (user.getAccounts().size() + 1));
-        user.getAccounts().add(account);
         account.getUsers().add(user);
+        user.getAccounts().add(account);
         return accountRepo.save(account);
     }
 
