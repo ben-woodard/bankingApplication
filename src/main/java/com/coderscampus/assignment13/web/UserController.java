@@ -80,7 +80,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}/account/{accountId}")
-	public String postAccountName(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId){
+	public String postNewAccountName(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId){
 		User user = userService.findById(userId);
 		Account account = accountService.findByID(accountId);
 		accountService.saveAccountandUser(account, user);
@@ -89,9 +89,8 @@ public class UserController {
 
 	@PostMapping("/users/{userId}/account")
 	public String postCreateAccount(ModelMap model, @PathVariable Long userId) {
-		User user = userService.findById(userId);
-		Account account = accountService.createAccount(user);
+		Account account = accountService.createAccount(userId);
 		model.put("account", account);
-		return "redirect:/users/{userId}/account/{accountId}";
+		return "redirect:/users/{userId}/account/"+account.getAccountId();
 	}
 }
