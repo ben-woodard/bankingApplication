@@ -50,6 +50,7 @@ public class UserController {
 	
 	@GetMapping("/users/{userId}")
 	public String getOneUser (ModelMap model, @PathVariable Long userId) {
+		System.out.println(userId);
 		User user = userService.findById(userId);
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
@@ -58,6 +59,7 @@ public class UserController {
 	
 	@PostMapping("/users/{userId}")
 	public String postOneUser (User user) {
+
 		userService.saveUser(user);
 		return "redirect:/users/"+user.getUserId();
 	}
