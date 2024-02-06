@@ -3,6 +3,8 @@ package com.coderscampus.assignment13.web;
 import java.util.Arrays;
 import java.util.Set;
 
+import com.coderscampus.assignment13.domain.Account;
+import com.coderscampus.assignment13.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +20,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	AccountService accountService;
 	
 	@GetMapping("/register")
 	public String getCreateUser (ModelMap model) {
@@ -37,12 +42,10 @@ public class UserController {
 	@GetMapping("/users")
 	public String getAllUsers (ModelMap model) {
 		Set<User> users = userService.findAll();
-		
 		model.put("users", users);
 		if (users.size() == 1) {
 			model.put("user", users.iterator().next());
 		}
-		
 		return "users";
 	}
 	
@@ -64,5 +67,12 @@ public class UserController {
 	public String deleteOneUser (@PathVariable Long userId) {
 		userService.delete(userId);
 		return "redirect:/users";
+	}
+
+	@GetMapping("/users/{userId}/account/{accountId}")
+	public String getOneUserAccount (ModelMap model, @PathVariable Long userId, @PathVariable Long accountId){
+		Account account = accountService.findByID(accountId);
+		model.put("account", account);
+		return "account";
 	}
 }
