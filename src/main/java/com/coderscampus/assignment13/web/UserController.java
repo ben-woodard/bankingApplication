@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -26,9 +27,7 @@ public class UserController {
 	
 	@GetMapping("/register")
 	public String getCreateUser (ModelMap model) {
-		
 		model.put("user", new User());
-		
 		return "register";
 	}
 	
@@ -72,7 +71,25 @@ public class UserController {
 	@GetMapping("/users/{userId}/account/{accountId}")
 	public String getOneUserAccount (ModelMap model, @PathVariable Long userId, @PathVariable Long accountId){
 		Account account = accountService.findByID(accountId);
+		User user = userService.findById(userId);
+		model.put("user", user);
 		model.put("account", account);
 		return "account";
+	}
+
+	@PostMapping("/users/{userId}/account/{accountId}")
+	public String postAccountName(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId){
+		User user = userService.findById(userId);
+		Account account = accountService.findByID(accountId);
+		accountService.saveAccountandUser(account, user);
+		return "redirect:/users/{userId}/account/{accountId}";
+	}
+
+	@PostMapping("/users/{userId}/account")
+	public String postCreateAccount(ModelMap model, @PathVariable Long userId) {
+		User user = userService.findById(userId);
+		Account account = accountService.createAccount(user);
+		model.put("account", account);
+		return "redirect:/users/{userId}/account/{accountId}";
 	}
 }

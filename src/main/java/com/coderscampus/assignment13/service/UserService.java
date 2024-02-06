@@ -63,6 +63,8 @@ public class UserService {
 			user.getAccounts().add(savings);
 			accountRepo.save(checking);
 			accountRepo.save(savings);
+		} else {
+
 		}
 		return userRepo.save(user);
 	}
