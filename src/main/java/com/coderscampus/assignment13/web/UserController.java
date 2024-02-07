@@ -2,19 +2,17 @@ package com.coderscampus.assignment13.web;
 
 import java.util.Arrays;
 import java.util.Set;
-
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.service.UserService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -80,16 +78,15 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}/account/{accountId}")
-	public String postNewAccountName(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId){
-		User user = userService.findById(userId);
-		Account account = accountService.findByID(accountId);
-		accountService.saveAccountandUser(account, user);
+	public String postNewAccountName(ModelMap model, @PathVariable Long accountId, @RequestParam String accountName){
+		Account account = accountService.saveAccountByIdAndName(accountId, accountName);
+		model.put("account", account);
 		return "redirect:/users/{userId}/account/{accountId}";
 	}
 
 	@PostMapping("/users/{userId}/account")
 	public String postCreateAccount(ModelMap model, @PathVariable Long userId) {
-		Account account = accountService.createAccount(userId);
+		Account account = accountService.saveAccountByUserId(userId);
 		model.put("account", account);
 		return "redirect:/users/{userId}/account/"+account.getAccountId();
 	}
