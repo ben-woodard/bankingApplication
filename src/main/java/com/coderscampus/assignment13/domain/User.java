@@ -20,7 +20,7 @@ public class User {
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "account_id"))
 	private List<Account> accounts = new ArrayList<>();
-	@OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private Address address;
 	
 
