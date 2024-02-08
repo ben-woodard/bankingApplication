@@ -9,21 +9,18 @@ import javax.persistence.*;
 @Entity // Class name = User, DB Table name = user
 @Table(name = "users")
 public class User {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Long userId;
 	private String username;
 	private String password;
 	private String name;
 	private LocalDate createdDate;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinTable(name = "user_account",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "account_id"))
-	private List<Account> accounts = new ArrayList<>();
-	@OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-	private Address address;
-	
 
+	private List<Account> accounts = new ArrayList<>();
+
+	private Address address;
+
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getUserId() {
 		return userId;
 	}
@@ -56,6 +53,10 @@ public class User {
 		this.createdDate = createdDate;
 	}
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinTable(name = "user_account",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "account_id"))
 	public List<Account> getAccounts() {
 		return accounts;
 	}
@@ -63,6 +64,7 @@ public class User {
 		this.accounts = accounts;
 	}
 
+	@OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	public Address getAddress() {
 		return address;
 	}

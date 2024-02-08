@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.coderscampus.assignment13.domain.Account;
+import com.coderscampus.assignment13.domain.Address;
+import com.coderscampus.assignment13.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.repository.AccountRepository;
 import com.coderscampus.assignment13.repository.UserRepository;
@@ -19,7 +20,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
-	private AccountRepository accountRepo;
+	AddressService addressService;
+	@Autowired
+	AccountService accountService;
 	
 	public List<User> findByUsername(String username) {
 		return userRepo.findByUsername(username);
@@ -50,22 +53,17 @@ public class UserService {
 		return userOpt.orElse(new User());
 	}
 
-	public User saveUser(User user) {
-//		if (user.getUserId() == null) {
-//			Account checking = new Account();
-//			checking.setAccountName("Checking Account");
-//			checking.getUsers().add(user);
-//			Account savings = new Account();
-//			savings.setAccountName("Savings Account");
-//			savings.getUsers().add(user);
-//
-//			user.getAccounts().add(checking);
-//			user.getAccounts().add(savings);
-//			accountRepo.save(checking);
-//			accountRepo.save(savings);
-//		}
+	public User updateUserInformation(User user){
+		addressService.save(user);
+		accountService.save(user);
 		return userRepo.save(user);
 	}
+
+	public User save(User user) {
+		return userRepo.save(user);
+	}
+
+
 
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);

@@ -6,7 +6,6 @@ import com.coderscampus.assignment13.repository.AccountRepository;
 import com.coderscampus.assignment13.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -21,8 +20,12 @@ public class AccountService {
     private UserRepository userRepo;
 
     public Account findByID(Long accountId) {
-      Optional<Account> account = accountRepo.findById(accountId);
-      return account.orElse(new Account());
+        Optional<Account> account = accountRepo.findById(accountId);
+        return account.orElse(new Account());
+    }
+
+    public User save(User user) {
+        return userRepo.save(user);
     }
 
     public Account saveAccountByUserId(Long userId) {
@@ -40,7 +43,6 @@ public class AccountService {
         account.setAccountName(accountName);
         return accountRepo.save(account);
     }
-
 
 
 }
