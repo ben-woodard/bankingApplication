@@ -13,8 +13,16 @@ public class AddressService {
     AddressRepository addressRepo;
 
     public Address save(User user) {
-        Address address = user.getAddress();
-        address.setUser(user);
-        return addressRepo.save(address);
+        if(user.getAddress() == null) {
+            Address address = new Address();
+            user.setAddress(address);
+            address.setUser(user);
+            address.setUserId(user.getUserId());
+        } else {
+            user.setAddress(user.getAddress());
+            user.getAddress().setUser(user);
+            user.getAddress().setUserId(user.getUserId());
+        }
+        return addressRepo.save(user.getAddress());
     }
 }

@@ -18,9 +18,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
-	private AccountRepository accountRepo;
+	AddressService addressService;
 	@Autowired
-	private AddressRepository addressRepo;
+	AccountService accountService;
 	
 	public List<User> findByUsername(String username) {
 		return userRepo.findByUsername(username);
@@ -51,15 +51,13 @@ public class UserService {
 		return userOpt.orElse(new User());
 	}
 
-	public User saveUser(User user) {
-		if(user.getAddress() == null) {
-			Address address = new Address();
-			user.setAddress(address);
-			address.setUser(user);
-			addressRepo.save(user.getAddress());
-		} 
+	public User save(User user) {
+		addressService.save(user);
+		accountService.save(user);
 		return userRepo.save(user);
 	}
+
+
 
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);

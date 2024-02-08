@@ -34,7 +34,7 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public String postCreateUser (User user) {
-		userService.saveUser(user);
+		userService.save(user);
 		return "redirect:/register";
 	}
 	
@@ -57,9 +57,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/users/{userId}")
-	public String postOneUser (User user) {
-		addressService.save(user);
-		userService.saveUser(user);
+	public String postOneUser (User user, Address address) {
+		userService.save(user);
 		return "redirect:/users/"+user.getUserId();
 	}
 	

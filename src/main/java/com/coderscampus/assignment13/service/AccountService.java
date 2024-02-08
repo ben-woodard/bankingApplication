@@ -25,6 +25,14 @@ public class AccountService {
       return account.orElse(new Account());
     }
 
+    public User save(User user){
+        if(user.getAccounts().isEmpty()){
+            return user;
+        } else {
+            user.setAccounts(user.getAccounts());
+        }
+        return userRepo.save(user);
+    }
     public Account saveAccountByUserId(Long userId) {
         User user = userService.findById(userId);
         Account account = new Account();
