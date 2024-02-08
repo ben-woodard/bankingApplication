@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<!--Single user UI-->
+<!--Single user/address UI-->
 <h1>Users</h1>
 <div th:if="${#lists.size(users) == 1}">
     <form action="" method="post">
@@ -18,6 +18,26 @@
         <div>
             Full Name: <input type="text" th:field="${user.name}"/>
         </div>
+        <hr>
+        <div>
+           Address Line 1: <input type="text"/>
+        </div>
+        <div>
+            Address Line 2: <input type="text" />
+        </div>
+        <div>
+            City: <input type="text" />
+        </div>
+        <div>
+            Region: <input type="text" />
+        </div>
+        <div>
+            Country: <input type="text" />
+        </div>
+        <div>
+            ZipCode: <input type="text" />
+        </div>
+        <br>
         <div>
             <input type="submit" value="Update User Account"/>
         </div>
@@ -26,13 +46,7 @@
         <input type="submit" value="Delete User Account"/>
     </form>
     <hr>
-    <!--Address, single user UI-->
-    <form>
-
-    </form>
-    <hr>
-
-    <!--Accounts, single user UI-->
+    <!--Single User Accounts UI-->
     <h1>Accounts</h1>
     <form method="post" th:action="@{/users/{userId}/account (userId=${user.userId})}">
         <div th:each="account : ${user.accounts}">
@@ -50,7 +64,7 @@
 </div>
 
 
-<!--All Users ui-->
+<!--All Users UI-->
 <div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
     <a method="get" th:href="@{/users/{userId}(userId=${user.userId})}"><span th:text="${user.userId}"></span></a> <br/>
     <span th:text="${user.username}"></span><br/>
