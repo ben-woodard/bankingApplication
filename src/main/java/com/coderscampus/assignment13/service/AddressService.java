@@ -3,6 +3,7 @@ package com.coderscampus.assignment13.service;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.repository.AddressRepository;
+import com.coderscampus.assignment13.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +11,17 @@ import org.springframework.stereotype.Service;
 public class AddressService {
 
     @Autowired
-    AddressRepository addressRepo;
+    private AddressRepository addressRepo;
+
+    @Autowired
+    private UserRepository userRepo;
 
     public Address save(User user) {
-        if(user.getAddress() == null) {
-            Address address = new Address();
-            user.setAddress(address);
-            address.setUser(user);
-            address.setUserId(user.getUserId());
-        } else {
-            user.setAddress(user.getAddress());
-            user.getAddress().setUser(user);
-            user.getAddress().setUserId(user.getUserId());
-        }
+        Address address = user.getAddress();
+        user.setAddress(address);
+        address.setUser(user);
+        address.setUserId(user.getUserId());
+        userRepo.save(user);
         return addressRepo.save(user.getAddress());
     }
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +53,13 @@ public class UserService {
 		return userOpt.orElse(new User());
 	}
 
-	public User save(User user) {
+	public User updateUserInformation(User user){
 		addressService.save(user);
 		accountService.save(user);
+		return userRepo.save(user);
+	}
+
+	public User save(User user) {
 		return userRepo.save(user);
 	}
 
