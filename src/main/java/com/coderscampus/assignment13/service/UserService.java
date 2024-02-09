@@ -13,9 +13,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
-	AddressService addressService;
+	private AddressService addressService;
 	@Autowired
-	AccountService accountService;
+	private AccountService accountService;
 
 	public Set<User> findAll () {
 		return userRepo.findAllUsersWithAccountsAndAddresses();

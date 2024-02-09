@@ -9,18 +9,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AddressService {
-
     @Autowired
     private AddressRepository addressRepo;
     @Autowired
     private UserRepository userRepo;
 
-    public Address save(User user) {
+    public void save(User user) {
         Address address = user.getAddress();
         user.setAddress(address);
         address.setUser(user);
         address.setUserId(user.getUserId());
         userRepo.save(user);
-        return addressRepo.save(user.getAddress());
+        addressRepo.save(user.getAddress());
     }
 }

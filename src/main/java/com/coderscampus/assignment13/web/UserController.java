@@ -1,10 +1,8 @@
 package com.coderscampus.assignment13.web;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import com.coderscampus.assignment13.domain.Account;
-import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.service.AccountService;
 import com.coderscampus.assignment13.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
+
+
 	public String postCreateUser (User user) {
 		userService.save(user);
 		return "redirect:/register";
@@ -44,6 +44,12 @@ public class UserController {
 			model.put("user", users.iterator().next());
 		}
 		return "users";
+	}
+
+	@PostMapping("/users")
+	public String updateUserIfOneRegisteredUser(User user){
+		userService.updateUserInformation(user);
+		return "redirect:/users/"+user.getUserId();
 	}
 	
 	@GetMapping("/users/{userId}")
@@ -84,9 +90,8 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}/account")
-	public String postCreateAccount(ModelMap model, @PathVariable Long userId) {
-		Account account = accountService.saveAccountByUserId(userId);
-		model.put("account", account);
+	public String postCreateAccount(@PathVariable Long userId) {
+		Account account = accountService.createAccountByUserId(userId);
 		return "redirect:/users/{userId}/account/"+account.getAccountId();
 	}
 }

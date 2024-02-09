@@ -27,7 +27,7 @@ public class AccountService {
         return userRepo.save(user);
     }
 
-    public Account saveAccountByUserId(Long userId) {
+    public Account createAccountByUserId(Long userId) {
         User user = userService.findById(userId);
         Account account = new Account();
         account.setAccountName("Account #" + (user.getAccounts().size() + 1));
@@ -37,11 +37,8 @@ public class AccountService {
     }
 
     public Account saveAccountByIdAndName(Long accountId, String accountName) {
-        Optional<Account> optAccount = accountRepo.findById(accountId);
-        Account account = optAccount.orElse(new Account());
+        Account account = accountRepo.findById(accountId).orElse(new Account());
         account.setAccountName(accountName);
         return accountRepo.save(account);
     }
-
-
 }
