@@ -9,7 +9,8 @@
 <form th:action="@{/users/{userId}/account/{accountId} (userId=${user.userId}, accountId=${account.accountId})}"
       method="post">
     <div>
-        Account Name: <input th:type=text th:field="${account.accountName}" th:value="${account.accountName}"/>
+        <label>Account Name:</label>
+        <input th:type=text th:field="${account.accountName}" th:value="${account.accountName}"/>
     </div>
     <div>
         <input type="submit" value="Save Account"/>
