@@ -36,9 +36,16 @@ public class AccountService {
         return accountRepo.save(account);
     }
 
-    public Account saveAccountByIdAndName(Long accountId, String accountName) {
+    public Account saveAccountByIdAndName(Long accountId, String accountName, Long userId) {
         Account account = accountRepo.findById(accountId).orElse(new Account());
-        account.setAccountName(accountName);
+        if(account.getUsers() == null){
+            User user = userService.findById(userId);
+            user.getAccounts().add(account);
+            account.getUsers().add(user);
+            account.setAccountName("Account #" + (user.getAccounts().size() + 1));
+        } else {
+            account.setAccountName(accountName);
+        }
         return accountRepo.save(account);
     }
 }
