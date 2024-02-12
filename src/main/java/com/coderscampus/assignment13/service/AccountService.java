@@ -39,10 +39,7 @@ public class AccountService {
     public Account saveAccountByIdAndName(Long accountId, String accountName, Long userId) {
         Account account = accountRepo.findById(accountId).orElse(new Account());
         if(account.getUsers() == null){
-            User user = userService.findById(userId);
-            user.getAccounts().add(account);
-            account.getUsers().add(user);
-            account.setAccountName("Account #" + (user.getAccounts().size() + 1));
+            createAccountByUserId(userId);
         } else {
             account.setAccountName(accountName);
         }
