@@ -26,10 +26,11 @@ public class UserService {
 		return userOpt.orElse(new User());
 	}
 
-	public User updateUserInformation(User user){
-		addressService.save(user);
-		accountService.save(user);
-		return userRepo.save(user);
+	public User updateUserByUserId(Long userId) {
+		User existingUser = findById(userId);
+		addressService.save(existingUser);
+		accountService.save(existingUser);
+		return userRepo.save(existingUser);
 	}
 
 	public User save(User user) {
