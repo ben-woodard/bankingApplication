@@ -14,13 +14,12 @@ public class AddressService {
     @Autowired
     private UserRepository userRepo;
 
+
     public void save(User user) {
-        if(user.getAddress() == null) {
-            Address address = new Address();
-            user.setAddress(address);
-            address.setUser(user);
-            address.setUserId(user.getUserId());
-        }
+        Address address = user.getAddress();
+        user.setAddress(address);
+        address.setUser(user);
+        address.setUserId(user.getUserId());
         userRepo.save(user);
         addressRepo.save(user.getAddress());
     }

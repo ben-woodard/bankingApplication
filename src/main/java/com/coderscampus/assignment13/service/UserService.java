@@ -26,12 +26,27 @@ public class UserService {
 		return userOpt.orElse(new User());
 	}
 
-	public User updateUserByUserId(Long userId) {
-		User existingUser = findById(userId);
-		addressService.save(existingUser);
-		accountService.save(existingUser);
-		return userRepo.save(existingUser);
+	public User passwordCheck (User user) {
+		if(user.getPassword() == ""){
+			User dbUser = userRepo.findById(user.getUserId()).orElse(new User());
+			user.setPassword(dbUser.getPassword());
+		}
+		return user;
 	}
+
+	public User updateUserInfo(User user) {
+		passwordCheck(user);
+		addressService.save(user);
+		accountService.save(user);
+		return userRepo.save(user);
+	}
+
+//	public User updateUserByUserId(Long userId) {
+//		User existingUser = findById(userId);
+//		addressService.save(existingUser);
+//		accountService.save(existingUser);
+//		return userRepo.save(existingUser);
+//	}
 
 	public User save(User user) {
 		return userRepo.save(user);

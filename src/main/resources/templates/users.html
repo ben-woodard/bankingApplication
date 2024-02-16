@@ -15,11 +15,14 @@
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" th:field="${user.password}" />
+          <input type="password" th:field="${user.password}" th:value="${user.password}"/>
         </div>
         <div>
           <label>Full Name:</label>
           <input type="text" th:field="${user.name}" />
+        </div>
+        <div>
+          <input type="hidden" th:field="${user.userId}" />
         </div>
         <hr />
         <div>
@@ -62,7 +65,7 @@
       <!--Single User Accounts UI-->
       <h1>Accounts</h1>
       <form method="post" th:action="@{/users/{userId}/account (userId=${user.userId})}">
-        <div th:each="account : ${accounts}">
+        <div th:each="account : ${user.accounts}">
           <a method="get" th:href="@{/users/{userId}/account/{accountId}(userId=${user.userId}, accountId=${account.accountId})}">
             <span th:text="${account.accountName}"th:field="${account.accountName}"></span>
           </a>
