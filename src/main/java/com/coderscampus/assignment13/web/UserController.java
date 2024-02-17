@@ -61,6 +61,9 @@ public class UserController {
 
     @PostMapping("/users/{userId}")
     public String postOneUser(User user) {
+        if(user.getUserId() == null) {
+            return "redirect:/register";
+        }
         userService.updateUserInfo(user);
         return "redirect:/users/" + user.getUserId();
     }
