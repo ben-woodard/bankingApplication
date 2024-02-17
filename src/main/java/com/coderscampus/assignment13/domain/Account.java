@@ -35,6 +35,7 @@ public class Account {
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
+
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
@@ -47,4 +48,6 @@ public class Account {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
 }
+

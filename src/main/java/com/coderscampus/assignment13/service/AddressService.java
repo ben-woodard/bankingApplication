@@ -14,7 +14,6 @@ public class AddressService {
     @Autowired
     private UserRepository userRepo;
 
-
     public void save(User user) {
         Address address = user.getAddress();
         user.setAddress(address);

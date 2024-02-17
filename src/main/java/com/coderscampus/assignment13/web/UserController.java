@@ -3,7 +3,6 @@ package com.coderscampus.assignment13.web;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
-
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.service.AccountService;
 import com.coderscampus.assignment13.service.AddressService;
@@ -82,14 +81,14 @@ public class UserController {
     }
 
     @PostMapping("/users/{userId}/account/{accountId}")
-    public String postUpdateAccount(@PathVariable Long accountId, @RequestParam String accountName, @PathVariable Long userId) {
-        accountService.saveAccountByIdAndName(accountId, accountName, userId);
+    public String postUpdateAccountInfo(@PathVariable Long accountId, @RequestParam String accountName) {
+        accountService.saveAccountByIdAndName(accountId, accountName);
         return "redirect:/users/{userId}/account/{accountId}";
     }
 
     @PostMapping("/users/{userId}/account")
     public String postCreateAccount(@PathVariable Long userId, @RequestParam Optional<String> accountName) {
-        Account account = accountService.createAccountByUserId(userId, accountName);
-        return "redirect:/users/{userId}/account/" + account.getAccountId();
+        Account account = accountService.createAccountByUserIdOptName(userId, accountName);
+        return "redirect:/users/{userId}/account/"+account.getAccountId();
     }
 }

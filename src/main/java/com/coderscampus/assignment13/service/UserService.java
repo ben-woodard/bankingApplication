@@ -41,13 +41,6 @@ public class UserService {
 		return userRepo.save(user);
 	}
 
-//	public User updateUserByUserId(Long userId) {
-//		User existingUser = findById(userId);
-//		addressService.save(existingUser);
-//		accountService.save(existingUser);
-//		return userRepo.save(existingUser);
-//	}
-
 	public User save(User user) {
 		return userRepo.save(user);
 	}
