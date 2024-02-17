@@ -28,10 +28,20 @@ public class AccountService {
         return userRepo.save(user);
     }
 
+    public Account createAccountName(User user, Optional<String> accountName) {
+        Account account = new Account();
+        String inputAccountName = accountName.orElse("");
+        if(inputAccountName == "") {
+            account.setAccountName("Account #" + (user.getAccounts().size() + 1));
+        } else {
+            account.setAccountName(accountName.get());
+        }
+        return account;
+    }
+
     public Account createAccountByUserIdOptName(Long userId, Optional<String> accountName) {
         User user = userService.findById(userId);
-        Account account = new Account();
-        account.setAccountName(accountName.orElse("Account #" + (user.getAccounts().size() + 1)));
+        Account account = createAccountName(user, accountName);
         account.getUsers().add(user);
         user.getAccounts().add(account);
         return accountRepo.save(account);
