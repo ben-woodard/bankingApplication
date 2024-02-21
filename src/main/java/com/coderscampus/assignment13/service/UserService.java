@@ -9,13 +9,16 @@ import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
 public class UserService {
-	
+	private final UserRepository userRepo;
+	private final AddressService addressService;
+	private final AccountService accountService;
+
 	@Autowired
-	private UserRepository userRepo;
-	@Autowired
-	private AddressService addressService;
-	@Autowired
-	private AccountService accountService;
+	public UserService(UserRepository userRepo, AddressService addressService, AccountService accountService) {
+		this.userRepo = userRepo;
+		this.addressService = addressService;
+		this.accountService = accountService;
+	}
 
 	public Set<User> findAll () {
 		return userRepo.findAllUsersWithAccountsAndAddresses();

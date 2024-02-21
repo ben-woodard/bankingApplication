@@ -3,7 +3,6 @@ package com.coderscampus.assignment13.service;
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.repository.AccountRepository;
-import com.coderscampus.assignment13.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +10,14 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
+    private final UserService userService;
+    private final AccountRepository accountRepo;
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private AccountRepository accountRepo;
-    @Autowired
-    private UserRepository userRepo;
+    public AccountService(UserService userService, AccountRepository accountRepo) {
+        this.userService = userService;
+        this.accountRepo = accountRepo;
+    }
 
     public Account findByID(Long accountId) {
         Optional<Account> account = accountRepo.findById(accountId);
@@ -25,7 +25,7 @@ public class AccountService {
     }
 
     public User save(User user) {
-        return userRepo.save(user);
+        return userService.save(user);
     }
 
     public Account createAccountName(User user, Optional<String> accountName) {
