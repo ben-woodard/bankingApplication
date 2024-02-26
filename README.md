@@ -1,2 +1,2 @@
 # benWoodardAssignment13
-Banking Application using Java, Spring Boot, Hibernate, Thymelaf
+Banking Application using Java, Spring Boot, Hibernate, Thymeleaf
